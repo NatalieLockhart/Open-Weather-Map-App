@@ -6,27 +6,28 @@ const port = 3000;
 
 app.get('/', (req, res) => res.send('Hello World!'));
 app.get('/weather', function(req, res) {
-	  res.send("weather here");
+	
+	var something;
+	weatherGet(res).then(data => {
+		res.send(data);
+	})
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
-var apiKey = '7bf5d1bb8a756b8177afbb2ee2e3be3e';
-var zipCode = '80223';
-
-//todo: switch to xml
-axios.get(`https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode}&appid=${apiKey}`)
-  .then(response => {
-	console.log(response.data.list[0].main.temp);
-	highTempAverages = getAverages(response.data.list, "maximum");
-	lowTempAverages = getAverages(response.data.list, "minimum");
-	console.log("high temp average for day 1: " + highTempAverages[0] + "°F");
-	console.log("low temp average for day 1: " + lowTempAverages[0] + "°F");	
-  })
-  .catch(error => {
-    console.log(error);
-  });
+function weatherGet(){
+    var apiKey = '7bf5d1bb8a756b8177afbb2ee2e3be3e';
+	var zipCode = '80223';
+	//todo: switch to xml
+	return axios.get(`https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode}&appid=${apiKey}`)
+	  .then(response => {
+		return response.data;
+	  })
+	  .catch(error => { 
+		console.log(error);
+	  });
+}
   
 //This method calculates the temperature averages over 5 days. 
 //If the string "minimum" is passed in for targetTemp, it gets the minimum temp averages. Otherwise, it gets the maximum temp averages.
