@@ -8,11 +8,16 @@ import { WeatherFormService } from './weather-form.service';
 })
 export class WeatherFormComponent implements OnInit {
 
-  temperatures : number[]; 
+  temperatures : any; 
   constructor(private weatherFormService: WeatherFormService) { }
 
   getWeather(): void {
-    this.temperatures = this.weatherFormService.getWeather();
+    //this.temperatures = this.weatherFormService.getWeather();
+    this.weatherFormService.getWeather().subscribe(
+      data => {this.temperatures = data, console.log(data)},
+      err => console.error(err),
+      () => console.log("did the thing")
+    );
   }
   
   ngOnInit() {
