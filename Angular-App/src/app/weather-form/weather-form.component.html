@@ -1,10 +1,31 @@
-<p>
-  weather-form works!
-</p>
+<form (keydown.enter)="$event.preventDefault()">
+  <div class="container">
+    <label>Enter your city or zip code here:</label>
+    <br />
+    <input type="text" #queryString>
+    <br />
+    <br />  
+    <button type="button" (click)="getWeather(queryString.value)">Submit</button>
+  </div>
+</form>
+
+
 <ul *ngIf="tempPopulated">
-  <h1>Weather for {{forecast.locationName}}</h1>
-  <li *ngFor="let temperature of forecast.highsArray">
-    Here is the temperature: {{temperature}}
-  </li>
+  <div class="container">
+    <h1>Weather for {{forecast.locationName}}</h1>
+    <li *ngFor="let high of forecast.highsArray; let i = index">
+      <div class="panel panel-primary">
+        <div class="panel-heading">{{forecast.datesArray[i]}}</div>
+        <div class="panel-body">
+          High: {{forecast.highsArray[i]}}
+          <br />
+          Low: {{forecast.lowsArray[i]}}
+        </div>
+      </div>
+    </li>
+    <br />
+  </div>
 </ul>
-<button type=button (click)="getWeather()">Submit</button>
+
+
+

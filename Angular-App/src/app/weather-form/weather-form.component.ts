@@ -13,9 +13,9 @@ export class WeatherFormComponent implements OnInit {
   tempPopulated : boolean;
   constructor(private weatherFormService: WeatherFormService) { }
 
-  getWeather(): void {
-    //this.temperatures = this.weathesrFormService.getWeather();
-    this.weatherFormService.getWeather().subscribe(
+  getWeather(queryString): void {
+    //if(!queryString) return;
+    this.weatherFormService.getWeather(queryString).subscribe(
       data => {this.forecast = data, console.log("Here is the temperature: " + this.forecast.highsArray), this.tempPopulated = true},
       err => console.error(err),
       () => console.log("did the thing")
@@ -23,7 +23,6 @@ export class WeatherFormComponent implements OnInit {
   }
   
   ngOnInit() {
-    //this.getWeather();
     this.tempPopulated = false;
   }
 

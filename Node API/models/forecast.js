@@ -1,9 +1,9 @@
 class Forecast {
-	constructor(locationName, highsArray, lowsArray, date){
+	constructor(locationName, highsArray, lowsArray, datesArray){
 		this.locationName = locationName;
 		this.highsArray = highsArray;
 		this.lowsArray = lowsArray;
-		this.date = date;
+		this.datesArray = datesArray;
 	}
 }
 

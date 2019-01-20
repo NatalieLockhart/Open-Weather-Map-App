@@ -50,8 +50,8 @@ class forecastController{
 		  .then(response => {
 			var highTempArray = this.getAverages(response.data.list, "maximum");
 			var lowTempArray = this.getAverages(response.data.list, "minimum");
-			var today = new Date();
-			var tempAverages = new Forecast(response.data.city.name, highTempArray, lowTempArray, today.getDate());
+			var dateArray = this.createDateArray();
+			var tempAverages = new Forecast(response.data.city.name, highTempArray, lowTempArray, dateArray);
 			return JSON.stringify(tempAverages);
 		  })
 		  .catch(error => { 
@@ -69,8 +69,8 @@ class forecastController{
 		  .then(response => {
 			var highTempArray = this.getAverages(response.data.list, "maximum");
 			var lowTempArray = this.getAverages(response.data.list, "minimum");
-			var today = new Date();
-			var tempAverages = new Forecast(response.data.city.name, highTempArray, lowTempArray, today.getDate());
+			var dateArray = this.createDateArray();
+			var tempAverages = new Forecast(response.data.city.name, highTempArray, lowTempArray, dateArray);
 			return JSON.stringify(tempAverages);
 		  })
 		  .catch(error => { 
@@ -84,6 +84,30 @@ class forecastController{
 
 	isValidCity(city){
 		return true;
+	}
+	
+	createDateArray() {
+		var datesArray = [];
+		
+		for(var i = 0; i < 6; i++){
+			var currentDate = new Date();
+			currentDate.setDate(currentDate.getDate() + i);
+			
+			var dd = currentDate.getDate();
+			var mm = currentDate.getMonth() + 1; //January is 0!
+			var yyyy = currentDate.getFullYear();
+
+			if (dd < 10) {
+			  dd = '0' + dd;
+			}
+
+			if (mm < 10) {
+			  mm = '0' + mm;
+			}
+
+			datesArray.push([mm, dd, yyyy].join('-'));
+		}
+		return datesArray;
 	}
 }
 
