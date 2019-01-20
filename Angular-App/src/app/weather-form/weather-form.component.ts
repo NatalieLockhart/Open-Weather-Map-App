@@ -9,14 +9,14 @@ import { IWeatherForecast } from './IWeatherForecast';
 })
 export class WeatherFormComponent implements OnInit {
 
-  temperatures : IWeatherForecast; 
+  forecast : IWeatherForecast; 
   tempPopulated : boolean;
   constructor(private weatherFormService: WeatherFormService) { }
 
   getWeather(): void {
     //this.temperatures = this.weathesrFormService.getWeather();
     this.weatherFormService.getWeather().subscribe(
-      data => {this.temperatures = data, console.log("Here is the temperature: " + this.temperatures.highs), this.tempPopulated = true},
+      data => {this.forecast = data, console.log("Here is the temperature: " + this.forecast.highsArray), this.tempPopulated = true},
       err => console.error(err),
       () => console.log("did the thing")
     );

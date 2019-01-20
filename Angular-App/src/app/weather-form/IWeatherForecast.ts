@@ -1,4 +1,6 @@
 export interface IWeatherForecast{
-    highs: number[];
-    lows: number[];
+    locationName: string;
+    highsArray: number[];
+    lowsArray: number[];
+    date: Date;
 }

@@ -2,7 +2,8 @@
   weather-form works!
 </p>
 <ul *ngIf="tempPopulated">
-  <li *ngFor="let temperature of temperatures.highs">
+  <h1>Weather for {{forecast.locationName}}</h1>
+  <li *ngFor="let temperature of forecast.highsArray">
     Here is the temperature: {{temperature}}
   </li>
 </ul>
