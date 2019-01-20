@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "apicache": "^1.2.3",
     "axios": "^0.18.0",
     "connect": "^3.6.6",
     "cors": "^2.8.5",

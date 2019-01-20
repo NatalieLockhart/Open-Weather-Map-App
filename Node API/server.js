@@ -1,11 +1,18 @@
 const https = require('https');
 const axios = require('axios');
+const apicache = require('apicache');
 var cors = require('cors');
 var express = require('express');
 var app = express();            
 const port = 3000;
+var cache = apicache.middleware;
 
 app.use(cors());
+app.use(cache('3 hours'));
+
+app.get('/will-be-cached', (req, res) => {
+  res.json({ success: true })
+})
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
