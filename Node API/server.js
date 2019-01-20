@@ -8,10 +8,15 @@ const port = 3000;
 app.use(cors());
 
 app.get('/', (req, res) => res.send('Hello World!'));
-app.get('/weather', function(req, res) {
-	
-	var something;
-	weatherGet(res).then(data => {
+
+app.get('/weather/zipCode/:zipCode', function(req, res) {	
+	weatherGetFromZip(res, req.params.zipCode).then(data => {
+		res.send(data);
+	})
+});
+
+app.get('/weather/city/:city', function(req, res){
+	weatherGetFromCity(res,req.params.city).then(data => {
 		res.send(data);
 	})
 });
@@ -19,10 +24,12 @@ app.get('/weather', function(req, res) {
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
-function weatherGet(){
+function weatherGetFromZip(res, zipCode){
     var apiKey = '7bf5d1bb8a756b8177afbb2ee2e3be3e';
-	var zipCode = '80223';
 	//todo: switch to xml
+	// if(!isValidZip(zipCode)){
+	  // return "The zip code was invalid.";
+	// }
 	return axios.get(`https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode}&appid=${apiKey}`)
 	  .then(response => {
 		highTempArray = getAverages(response.data.list, "maximum");
@@ -33,6 +40,32 @@ function weatherGet(){
 	  .catch(error => { 
 		console.log(error);
 	  });
+}
+
+function weatherGetFromCity(res, city){
+    var apiKey = '7bf5d1bb8a756b8177afbb2ee2e3be3e';
+	//todo: switch to xml
+	// if(!isValidCity(city)){
+	  // return "The city was invalid.";
+	// }
+	return axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city},us&appid=${apiKey}`)
+	  .then(response => {
+		highTempArray = getAverages(response.data.list, "maximum");
+		lowTempArray = getAverages(response.data.list, "minimum");
+		var tempAverages = {highs: highTempArray, lows: lowTempArray};
+		return tempAverages;
+	  })
+	  .catch(error => { 
+		console.log(error);
+	  });
+}
+  
+function isValidZip(zipCode){
+	return true;
+}	
+
+function isValidCity(city){
+	return true;
 }
   
 //This method calculates the temperature averages over 5 days. 
