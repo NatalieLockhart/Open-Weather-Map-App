@@ -17,6 +17,7 @@ export class WeatherFormService {
 
   constructor(private http:HttpClient) { }
 
+  //call the Node API to get the forecast
   getWeather(queryString): Observable<any>{
     if(isNaN(queryString[0])){
       return this.http.get(this.cityURL + queryString);

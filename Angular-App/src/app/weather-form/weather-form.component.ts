@@ -13,8 +13,8 @@ export class WeatherFormComponent implements OnInit {
   tempPopulated : boolean;
   constructor(private weatherFormService: WeatherFormService) { }
 
+  //subscribe to the WeatherFormService so we can recieve the results of the call to the node API
   getWeather(queryString): void {
-    //if(!queryString) return;
     this.weatherFormService.getWeather(queryString).subscribe(
       data => {this.forecast = data, console.log("Here is the temperature: " + this.forecast.highsArray), this.tempPopulated = true},
       err => console.error(err),

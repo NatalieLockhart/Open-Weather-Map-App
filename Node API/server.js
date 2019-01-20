@@ -9,6 +9,7 @@ var cache = apicache.middleware;
 
 var fcController = new ForecastController();
 
+//activate cors so that the locally-hosted angular app can access the locally-hosted node API
 app.use(cors());
 app.use(cache('3 hours'));
 
@@ -18,6 +19,7 @@ app.get('/will-be-cached', (req, res) => {
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
+//route for calling the weather forecast using a zip code paramter
 app.get('/weather/zipCode/:zipCode', function(req, res) {
 	if(!fcController.isValidZip(req.params.zipCode)){
 		res.send(new Forecast('', [], [], []));
@@ -27,6 +29,7 @@ app.get('/weather/zipCode/:zipCode', function(req, res) {
 	})
 });
 
+//route for calling the weather forecast using a city paramter
 app.get('/weather/city/:city', function(req, res){
 	if(!fcController.isValidCity(req.params.city)){
 		res.send(new Forecast('', [], [], []));
@@ -36,6 +39,6 @@ app.get('/weather/city/:city', function(req, res){
 	})
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Node API is listening on port ${port}!`))
 
 

@@ -40,12 +40,9 @@ class forecastController{
 		return tempArray;
 	}
 
+	//OpenWeatherMap api call using a zip code
 	weatherGetFromZip(res, zipCode){
 		var apiKey = '7bf5d1bb8a756b8177afbb2ee2e3be3e';
-		//todo: switch to xml
-		// if(!isValidZip(zipCode)){
-		  // return "The zip code was invalid.";
-		// }
 		return axios.get(`https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode}&appid=${apiKey}`)
 		  .then(response => {
 			var highTempArray = this.getAverages(response.data.list, "maximum");
@@ -59,12 +56,9 @@ class forecastController{
 		  });
 	}
 	
+	//OpenWeatherMap api call using a city 
 	weatherGetFromCity(res, city){
 		var apiKey = '7bf5d1bb8a756b8177afbb2ee2e3be3e';
-		//todo: switch to xml
-		// if(!isValidCity(city)){
-		  // return "The city was invalid.";
-		// }
 		return axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city},us&appid=${apiKey}`)
 		  .then(response => {
 			var highTempArray = this.getAverages(response.data.list, "maximum");
@@ -78,6 +72,7 @@ class forecastController{
 		  });
 	}
 	
+	//check if the zip code parameter has 5 characters that are all numbers
 	isValidZip(zipCode){
 		if(zipCode.length != 5 || (zipCode.match(/[a-z]/i))){
 			return false;
@@ -85,6 +80,7 @@ class forecastController{
 		return true;
 	}	
 
+	//check if the city parameter has any numbers in it
 	isValidCity(city){
 		if(city.match(/\d/)){
 			return false;
@@ -92,6 +88,7 @@ class forecastController{
 		return true;
 	}
 	
+	//returns an array with today's date and the next 5 days converted into strings
 	createDateArray() {
 		var datesArray = [];
 		
