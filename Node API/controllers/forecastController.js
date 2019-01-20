@@ -52,7 +52,7 @@ class forecastController{
 			var lowTempArray = this.getAverages(response.data.list, "minimum");
 			var today = new Date();
 			var tempAverages = new Forecast(response.data.city.name, highTempArray, lowTempArray, today.getDate());
-			return tempAverages;
+			return JSON.stringify(tempAverages);
 		  })
 		  .catch(error => { 
 			console.log(error);
@@ -71,7 +71,7 @@ class forecastController{
 			var lowTempArray = this.getAverages(response.data.list, "minimum");
 			var today = new Date();
 			var tempAverages = new Forecast(response.data.city.name, highTempArray, lowTempArray, today.getDate());
-			return tempAverages;
+			return JSON.stringify(tempAverages);
 		  })
 		  .catch(error => { 
 			console.log(error);
