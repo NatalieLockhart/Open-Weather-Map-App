@@ -51,8 +51,8 @@ class forecastController{
 			var highTempArray = this.getAverages(response.data.list, "maximum");
 			var lowTempArray = this.getAverages(response.data.list, "minimum");
 			var dateArray = this.createDateArray();
-			var tempAverages = new Forecast(response.data.city.name, highTempArray, lowTempArray, dateArray);
-			return JSON.stringify(tempAverages);
+			var forecast = new Forecast(response.data.city.name, highTempArray, lowTempArray, dateArray);
+			return JSON.stringify(forecast);
 		  })
 		  .catch(error => { 
 			console.log(error);
@@ -70,19 +70,25 @@ class forecastController{
 			var highTempArray = this.getAverages(response.data.list, "maximum");
 			var lowTempArray = this.getAverages(response.data.list, "minimum");
 			var dateArray = this.createDateArray();
-			var tempAverages = new Forecast(response.data.city.name, highTempArray, lowTempArray, dateArray);
-			return JSON.stringify(tempAverages);
+			var forecast = new Forecast(response.data.city.name, highTempArray, lowTempArray, dateArray);
+			return JSON.stringify(forecast);
 		  })
 		  .catch(error => { 
 			console.log(error);
 		  });
 	}
-	  
+	
 	isValidZip(zipCode){
+		if(zipCode.length != 5 || (zipCode.match(/[a-z]/i))){
+			return false;
+		}
 		return true;
 	}	
 
 	isValidCity(city){
+		if(city.match(/\d/)){
+			return false;
+		}
 		return true;
 	}
 	
