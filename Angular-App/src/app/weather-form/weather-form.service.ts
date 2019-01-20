@@ -11,8 +11,8 @@ const httpOptions = {
 })
 export class WeatherFormService {
 
-  temperatures: number[] = [1,2,3];
-  url: string = "http://localhost:3000/weather"
+  temperatures: number[];
+  url: string = "http://localhost:3000/weather/zipCode/80223"
   
 
   constructor(private http:HttpClient) { }

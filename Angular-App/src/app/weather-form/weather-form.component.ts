@@ -23,7 +23,7 @@ export class WeatherFormComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.getWeather();
+    //this.getWeather();
     this.tempPopulated = false;
   }
 
