@@ -17,4 +17,5 @@ Open an admin commdn prompt and navigate to the "Angular-App" folder. Once in th
 Once the NPM packages finish downloading, run "ng server". The app should be listening on port 4200.
 To shut down the app, press ctrl+c twice.
 
-Once both apps are running, you will be able to input either a US zip code or US city, click the submit button, and receive basic weather information about the area you submitted.
+Once both apps are running, you will be able to navigate to http://localhost:4200/ and input either a US zip code or US city, 
+click the submit button, and receive basic weather information about the area you submitted.
