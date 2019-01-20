@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherFormService } from './weather-form.service';
+import { IWeatherForecast } from './IWeatherForecast';
 
 @Component({
   selector: 'app-weather-form',
@@ -8,13 +9,14 @@ import { WeatherFormService } from './weather-form.service';
 })
 export class WeatherFormComponent implements OnInit {
 
-  temperatures : any; 
+  temperatures : IWeatherForecast; 
+  tempPopulated : boolean;
   constructor(private weatherFormService: WeatherFormService) { }
 
   getWeather(): void {
-    //this.temperatures = this.weatherFormService.getWeather();
+    //this.temperatures = this.weathesrFormService.getWeather();
     this.weatherFormService.getWeather().subscribe(
-      data => {this.temperatures = data, console.log(data)},
+      data => {this.temperatures = data, console.log("Here is the temperature: " + this.temperatures.highs), this.tempPopulated = true},
       err => console.error(err),
       () => console.log("did the thing")
     );
@@ -22,6 +24,7 @@ export class WeatherFormComponent implements OnInit {
   
   ngOnInit() {
     this.getWeather();
+    this.tempPopulated = false;
   }
 
 }

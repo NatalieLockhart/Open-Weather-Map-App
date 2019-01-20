@@ -32,7 +32,10 @@ function weatherGet(){
 	//todo: switch to xml
 	return axios.get(`https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode}&appid=${apiKey}`)
 	  .then(response => {
-		return response.data;
+		highTempArray = getAverages(response.data.list, "maximum");
+		lowTempArray = getAverages(response.data.list, "minimum");
+		var tempAverages = {highs: highTempArray, lows: lowTempArray};
+		return tempAverages;
 	  })
 	  .catch(error => { 
 		console.log(error);
