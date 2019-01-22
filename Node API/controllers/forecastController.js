@@ -19,6 +19,11 @@ class forecastController{
 			var date = data[i].dt_txt.split(' ')[0];
 			
 			//if the date has changed or we have reached the end of the dataset, add the current high/low temperature to the temperature Array
+			if(i == data.length-1){
+				currentHighOrLow = this.incrementAverages(data[i], currentHighOrLow, targetTemp);
+				tempCount++;
+			}
+			
 			if(date != sameDate || i == data.length-1){
 				currentHighOrLow = (currentHighOrLow/tempCount) * 9/5 - 459.67;
 				tempArray.push(Math.round(100*currentHighOrLow)/100);
@@ -26,18 +31,22 @@ class forecastController{
 				currentHighOrLow = 0;
 				sameDate = date;
 			}
-			else{
-				if(targetTemp == "minimum"){
-					currentHighOrLow += data[i].main.temp_min;
-				}
-				else{
-					currentHighOrLow += data[i].main.temp_max;
-				}
-				tempCount++;
-			}
+
+			currentHighOrLow = this.incrementAverages(data[i], currentHighOrLow, targetTemp);
+			tempCount++;
 			i++;
 		}
 		return tempArray;
+	}
+	
+	incrementAverages(data, currentHighOrLow, targetTemp){
+		if(targetTemp == "minimum"){
+			currentHighOrLow += data.main.temp_min;
+		}
+		else{
+			currentHighOrLow += data.main.temp_max;
+		}
+		return currentHighOrLow;
 	}
 
 	//OpenWeatherMap api call using a zip code

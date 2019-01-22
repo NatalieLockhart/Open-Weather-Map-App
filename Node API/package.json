@@ -1,21 +1,27 @@
 {
-  "name": "y",
+  "name": "",
   "version": "1.0.0",
   "description": "",
   "main": "webAPI.js",
+  "directories" : {
+    "test" : "test"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "apicache": "^1.2.3",
     "axios": "^0.18.0",
+    "chai": "^4.2.0",
     "connect": "^3.6.6",
     "cors": "^2.8.5",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "httpdispatcher": "^2.1.2",
-    "nodemon": "^1.18.9"
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.9",
+    "sinon": "^7.2.3"
   }
 }
