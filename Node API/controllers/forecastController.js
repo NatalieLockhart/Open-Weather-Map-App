@@ -6,9 +6,22 @@ class forecastController{
 	
 	constructor() {}
 	
+	//This method adds temp_min to the currentHighOrLow if targetTemp is "minimum",
+	//or temp_max if targetTemp is "maximum"
+	incrementAverages(data, currentHighOrLow, targetTemp){
+		if(targetTemp == "minimum"){
+			currentHighOrLow += data.main.temp_min;
+		}
+		else{
+			currentHighOrLow += data.main.temp_max;
+		}
+		return currentHighOrLow;
+	}
+	
 	//This method calculates the temperature averages over 5 days. 
 	//If the string "minimum" is passed in for targetTemp, it gets the minimum temp averages. Otherwise, it gets the maximum temp averages.
 	getAverages(data, targetTemp){	
+		if(data == null) { return []; }
 		var i = 0;
 		var tempArray = [];
 		var sameDate = data[0].dt_txt.split(' ')[0];
@@ -36,17 +49,8 @@ class forecastController{
 			tempCount++;
 			i++;
 		}
+		console.log("final length: " + tempArray.length);
 		return tempArray;
-	}
-	
-	incrementAverages(data, currentHighOrLow, targetTemp){
-		if(targetTemp == "minimum"){
-			currentHighOrLow += data.main.temp_min;
-		}
-		else{
-			currentHighOrLow += data.main.temp_max;
-		}
-		return currentHighOrLow;
 	}
 
 	//OpenWeatherMap api call using a zip code

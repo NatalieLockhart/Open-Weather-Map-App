@@ -1,6 +1,8 @@
 var expect = require('chai').expect;
 var forecastController = require('../controllers/forecastController.js');
 var mockOpenWeatherAPIResponse = require('./mockOpenWeatherAPIResponse.js');
+var Forecast = require('../models/forecast.js');
+
 var forecastController = new forecastController();
 
 describe('forecastController.getAverages(data, "maximum")', function (){
@@ -21,7 +23,7 @@ describe('forecastController.getAverages(data, "maximum")', function (){
 		}
 		
 		//2. ACT
-		var averageOfHighs2 = forecastController.getAverages(mockOpenWeatherAPIResponse, "maximum");
+		var averageOfHighs2 = forecastController.getAverages(mockOpenWeatherAPIResponse.list, "maximum");
 		
 		//3. ASSERT
 		//Note: we can't use a typical "expect(value).to.be.equal.(value2) here
@@ -50,7 +52,7 @@ describe('forecastController.getAverages(data, "minimum")', function (){
 		}
 		
 		//2. ACT
-		var averageOfLows2 = forecastController.getAverages(mockOpenWeatherAPIResponse, "minimum");
+		var averageOfLows2 = forecastController.getAverages(mockOpenWeatherAPIResponse.list, "minimum");
 		
 		//3. ASSERT
 		//Note: we can't use a typical "expect(value).to.be.equal.(value2) here
@@ -61,16 +63,145 @@ describe('forecastController.getAverages(data, "minimum")', function (){
 		
 	});
 });
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+describe('forecastController.getAverages(data, targetTemp)', function (){
+	it('should return an empty array if passed null data', function () {
+		
+		//1. ARRANGE
+		var result1 = [];
+		var invalidOpenWeatherAPIResponse = null;
+		
+		//2. ACT
+		var result2 = forecastController.getAverages(invalidOpenWeatherAPIResponse, "minimum");
+		
+		//3. ASSERT
+		expect(result1).to.have.members([]);
+	});
+});
+
+describe('forecastController.isValidZip(zipCode)', function (){
+	it('should return false when zipCode parameter contains letters', function () {
+		
+		//1. ARRANGE
+		
+		//2. ACT
+		var result = forecastController.isValidZip("711a08");
+		
+		//3. ASSERT
+		expect(result).to.be.false;
+	});
+});
+
+describe('forecastController.isValidZip(zipCode)', function (){
+	it('should return false when zipCode parameter is longer than 5 characters', function () {
+		
+		//1. ARRANGE
+		
+		//2. ACT
+		var result = forecastController.isValidZip("711061");
+		
+		//3. ASSERT
+		expect(result).to.be.false;
+	});
+});
+
+describe('forecastController.isValidZip(zipCode)', function (){
+	it('should return true when zip code is 5 numbers and contains no letters', function () {
+		
+		//1. ARRANGE
+		
+		//2. ACT
+		var result = forecastController.isValidZip("71106");
+		
+		//3. ASSERT
+		expect(result).to.be.true;
+	});
+});
+
+describe('forecastController.isValidCity(city)', function (){
+	it('should return false when city parameter contains numbers', function () {
+		
+		//1. ARRANGE
+		
+		//2. ACT
+		var result = forecastController.isValidCity("shrev1eport");
+		
+		//3. ASSERT
+		expect(result).to.be.false;
+	});
+});
+
+describe('forecastController.isValidCity(city)', function (){
+	it('should return true when city parameter contains no numbers', function () {
+		
+		//1. ARRANGE
+		
+		//2. ACT
+		var result = forecastController.isValidCity("shreveport");
+		
+		//3. ASSERT
+		expect(result).to.be.true;
+	});
+});
+
+describe('forecastController.createDateArray', function (){
+	it('should create an array containing today and the 5 dates after today in "mm-dd-yyyy" format', function () {
+		
+		//1. ARRANGE
+		var currentDate = new Date();
+		var dd = currentDate.getDate();
+			var mm = currentDate.getMonth() + 1; //January is 0!
+			var yyyy = currentDate.getFullYear();
+
+			if (dd < 10) {
+			  dd = '0' + dd;
+			}
+
+			if (mm < 10) {
+			  mm = '0' + mm;
+			}
+		var result1 = [mm,dd,yyyy].join('-');	
+		
+		
+		//2. ACT
+		var result2 = forecastController.createDateArray();
+		
+		//3. ASSERT
+		expect(result2[0]).to.equal(result1);
+	});
+});
+
+describe('forecastController.incrementAverages(data,currentHighOrLow, targetTemp)', function (){
+	it('should increment the currentHighOrLow parameter with the min temp from the data parameter when targetTemp is "minimum"', function () {
+		
+		//1. ARRANGE
+		var currentHighOrLow = 0;
+		var temp_min = 267.472;
+		var temp_max = 270.35;
+		var result1 = currentHighOrLow + temp_min;		
+		
+		//2. ACT
+		var result2 = forecastController.incrementAverages(mockOpenWeatherAPIResponse.list[0], 0, "minimum");
+		
+		//3. ASSERT
+		expect(result2).to.equal(result1);
+	});
+});
+
+describe('forecastController.incrementAverages(data,currentHighOrLow, targetTemp)', function (){
+	it('should increment the currentHighOrLow parameter with the max temp from the data parameter when targetTemp is "maximum"', function () {
+		
+		//1. ARRANGE
+		var currentHighOrLow = 0;
+		var temp_min = 267.472;
+		var temp_max = 270.35;
+		var result1 = currentHighOrLow + temp_max;		
+		
+		//2. ACT
+		var result2 = forecastController.incrementAverages(mockOpenWeatherAPIResponse.list[0], 0, "maximum");
+		
+		//3. ASSERT
+		expect(result2).to.equal(result1);
+	});
+});
 	
