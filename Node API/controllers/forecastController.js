@@ -49,7 +49,6 @@ class forecastController{
 			tempCount++;
 			i++;
 		}
-		console.log("final length: " + tempArray.length);
 		return tempArray;
 	}
 
