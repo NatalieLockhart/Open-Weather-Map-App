@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { IWeatherForecast } from './IWeatherForecast';
 
 import { WeatherFormComponent } from './weather-form.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 describe('WeatherFormComponent', () => {
   let component: WeatherFormComponent;
@@ -8,6 +11,9 @@ describe('WeatherFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpClientModule
+      ],
       declarations: [ WeatherFormComponent ]
     })
     .compileComponents();
@@ -22,4 +28,5 @@ describe('WeatherFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

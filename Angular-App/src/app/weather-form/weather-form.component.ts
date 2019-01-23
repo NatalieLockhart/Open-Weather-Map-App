@@ -16,9 +16,8 @@ export class WeatherFormComponent implements OnInit {
   //subscribe to the WeatherFormService so we can recieve the results of the call to the node API
   getWeather(queryString): void {
     this.weatherFormService.getWeather(queryString).subscribe(
-      data => {this.forecast = data, console.log("Here is the temperature: " + this.forecast.highsArray), this.tempPopulated = true},
-      err => console.error(err),
-      () => console.log("did the thing")
+      data => {this.forecast = data, this.tempPopulated = true},
+      err => console.error(err)
     );
   }
   
